@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "News Cross-Check",
+  "name": "Metaphorical",
   "version": "1.0.0",
   "description": "Cross-check news articles for reliability and misinformation.",
   "permissions": ["sidePanel", "activeTab", "storage", "scripting", "tabs"],
@@ -14,7 +14,41 @@
     "*://*.theguardian.com/*",
     "*://*.foxnews.com/*",
     "*://*.aljazeera.com/*",
-    "*://*.bloomberg.com/*"
+    "*://*.bloomberg.com/*",
+    "*://*.indiatimes.com/*",
+    "*://*.hindustantimes.com/*",
+    "*://*.indianexpress.com/*",
+    "*://*.thehindu.com/*",
+    "*://*.ndtv.com/*",
+    "*://*.news18.com/*",
+    "*://*.indiatoday.in/*",
+    "*://*.firstpost.com/*",
+    "*://*.livemint.com/*",
+    "*://*.zeenews.india.com/*",
+    "*://*.moneycontrol.com/*",
+    "*://*.business-standard.com/*",
+    "*://*.deccanherald.com/*",
+    "*://news.google.com/*",
+    "*://*.aajtak.in/*",
+    "*://*.abplive.com/*",
+    "*://*.bhaskar.com/*",
+    "*://*.jagran.com/*",
+    "*://*.amarujala.com/*",
+    "*://*.patrika.com/*",
+    "*://*.theprint.in/*",
+    "*://*.thequint.com/*",
+    "*://*.scroll.in/*",
+    "*://*.thewire.in/*",
+    "*://*.republicworld.com/*",
+    "*://*.financialexpress.com/*",
+    "*://*.dnaindia.com/*",
+    "*://*.oneindia.com/*",
+    "*://*.inshorts.com/*",
+    "*://*.dailyhunt.in/*",
+    "*://*.outlookindia.com/*",
+    "*://*.jansatta.com/*",
+    "*://*.punjabkesari.in/*",
+    "*://*.lokmat.com/*"
   ],
   "background": {
     "service_worker": "src/background.ts",
@@ -32,7 +66,41 @@
         "*://*.theguardian.com/*",
         "*://*.foxnews.com/*",
         "*://*.aljazeera.com/*",
-        "*://*.bloomberg.com/*"
+        "*://*.bloomberg.com/*",
+        "*://*.indiatimes.com/*",
+        "*://*.hindustantimes.com/*",
+        "*://*.indianexpress.com/*",
+        "*://*.thehindu.com/*",
+        "*://*.ndtv.com/*",
+        "*://*.news18.com/*",
+        "*://*.indiatoday.in/*",
+        "*://*.firstpost.com/*",
+        "*://*.livemint.com/*",
+        "*://*.zeenews.india.com/*",
+        "*://*.moneycontrol.com/*",
+        "*://*.business-standard.com/*",
+        "*://*.deccanherald.com/*",
+        "*://news.google.com/*",
+        "*://*.aajtak.in/*",
+        "*://*.abplive.com/*",
+        "*://*.bhaskar.com/*",
+        "*://*.jagran.com/*",
+        "*://*.amarujala.com/*",
+        "*://*.patrika.com/*",
+        "*://*.theprint.in/*",
+        "*://*.thequint.com/*",
+        "*://*.scroll.in/*",
+        "*://*.thewire.in/*",
+        "*://*.republicworld.com/*",
+        "*://*.financialexpress.com/*",
+        "*://*.dnaindia.com/*",
+        "*://*.oneindia.com/*",
+        "*://*.inshorts.com/*",
+        "*://*.dailyhunt.in/*",
+        "*://*.outlookindia.com/*",
+        "*://*.jansatta.com/*",
+        "*://*.punjabkesari.in/*",
+        "*://*.lokmat.com/*"
       ],
       "js": ["src/content.ts"]
     }
@@ -41,11 +109,16 @@
     "default_path": "index.html"
   },
   "action": {
-    "default_title": "News Cross-Check"
+    "default_title": "Metaphorical",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   },
   "icons": {
-    "16": "icon.svg",
-    "48": "icon.svg",
-    "128": "icon.svg"
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }

@@ -93,7 +93,18 @@ export function SidePanel() {
         "*://*.reuters.com/*", "*://*.bbc.com/*", "*://*.bbc.co.uk/*",
         "*://*.cnn.com/*", "*://*.nytimes.com/*", "*://*.apnews.com/*",
         "*://*.theguardian.com/*", "*://*.foxnews.com/*", "*://*.aljazeera.com/*",
-        "*://*.bloomberg.com/*"
+        "*://*.bloomberg.com/*", "*://*.indiatimes.com/*", "*://*.hindustantimes.com/*",
+        "*://*.indianexpress.com/*", "*://*.thehindu.com/*", "*://*.ndtv.com/*",
+        "*://*.news18.com/*", "*://*.indiatoday.in/*", "*://*.firstpost.com/*",
+        "*://*.livemint.com/*", "*://*.zeenews.india.com/*", "*://*.moneycontrol.com/*",
+        "*://*.business-standard.com/*", "*://*.deccanherald.com/*", "*://news.google.com/*",
+        "*://*.aajtak.in/*", "*://*.abplive.com/*", "*://*.bhaskar.com/*",
+        "*://*.jagran.com/*", "*://*.amarujala.com/*", "*://*.patrika.com/*",
+        "*://*.theprint.in/*", "*://*.thequint.com/*", "*://*.scroll.in/*",
+        "*://*.thewire.in/*", "*://*.republicworld.com/*", "*://*.financialexpress.com/*",
+        "*://*.dnaindia.com/*", "*://*.oneindia.com/*", "*://*.inshorts.com/*",
+        "*://*.dailyhunt.in/*", "*://*.outlookindia.com/*", "*://*.jansatta.com/*",
+        "*://*.punjabkesari.in/*", "*://*.lokmat.com/*"
       ] });
       
       const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -190,7 +201,7 @@ export function SidePanel() {
       <header className="bg-header text-white px-4 py-4 flex items-center justify-between shadow-xl z-20 shrink-0">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-primary" />
-          <h1 className="text-lg font-bold tracking-tight uppercase leading-none mt-0.5">News Cross-Check</h1>
+          <h1 className="text-lg font-bold tracking-tight uppercase leading-none mt-0.5">Metaphorical</h1>
         </div>
         <div className="flex items-center gap-2">
           <button 
@@ -259,9 +270,18 @@ export function SidePanel() {
       <main className="flex-1 overflow-y-auto p-4 space-y-8 scrollbar-hide relative">
         {currentTab === 'settings' ? (
           <section className="bg-surface-card rounded-xl p-6 shadow-xl border border-on-surface/5 animate-in fade-in slide-in-from-right-4">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
-              <Settings className="w-4 h-4" /> Configuration
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                <Settings className="w-4 h-4" /> Configuration
+              </h2>
+              <button 
+                onClick={() => setCurrentTab('check')} 
+                className="opacity-50 hover:opacity-100 hover:text-rose-500 transition-colors cursor-pointer p-1"
+                title="Go Back"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
             
             <div className="space-y-5">
               <div className="space-y-2">
