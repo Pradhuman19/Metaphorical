@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "News Cross-Check",
+  "version": "1.0.0",
+  "description": "Cross-check news articles for reliability and misinformation.",
+  "permissions": ["sidePanel", "activeTab", "storage", "scripting", "tabs"],
+  "host_permissions": [
+    "*://*.reuters.com/*",
+    "*://*.bbc.com/*",
+    "*://*.bbc.co.uk/*",
+    "*://*.cnn.com/*",
+    "*://*.nytimes.com/*",
+    "*://*.apnews.com/*",
+    "*://*.theguardian.com/*",
+    "*://*.foxnews.com/*",
+    "*://*.aljazeera.com/*",
+    "*://*.bloomberg.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.reuters.com/*",
+        "*://*.bbc.com/*",
+        "*://*.bbc.co.uk/*",
+        "*://*.cnn.com/*",
+        "*://*.nytimes.com/*",
+        "*://*.apnews.com/*",
+        "*://*.theguardian.com/*",
+        "*://*.foxnews.com/*",
+        "*://*.aljazeera.com/*",
+        "*://*.bloomberg.com/*"
+      ],
+      "js": ["src/content.ts"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "action": {
+    "default_title": "News Cross-Check"
+  },
+  "icons": {
+    "16": "icon.svg",
+    "48": "icon.svg",
+    "128": "icon.svg"
+  }
+}

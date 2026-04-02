@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #131b2e; /* on-surface */
+  background-color: #faf8ff; /* surface */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Theme Variables for Tailwind v4: Editorial Precision */
+@theme {
+  --color-primary: #ff8000;
+  --color-primary-dim: #964900;
+  
+  --color-surface: #faf8ff;
+  --color-surface-container: #f2f3ff;
+  --color-surface-card: #ffffff;
+  
+  --color-on-surface: #131b2e;
+  --color-header: #0f172a;
+  
+  --radius-xl: 0.75rem; /* 12px */
+  --radius-md: 0.375rem; /* 6px */
+  
+  --animate-shimmer: shimmer 2s infinite linear;
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  background-color: var(--color-surface);
+}
+
+#root {
+  width: 100%;
+}
+
+/* Shimmer utility */
+.shimmer-active {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #eef0ff;
+    background-color: #0f172a;
+  }
+}
