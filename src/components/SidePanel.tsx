@@ -5,6 +5,7 @@ import {
   ArrowRight, 
   ShieldCheck, 
   History, 
+  ChevronRight,
   Loader2,
   Clock,
   ExternalLink,
@@ -121,8 +122,16 @@ export function SidePanel() {
   }, []);
 
   useEffect(() => {
-    if (currentTab === 'check') handleScrape();
-  }, [handleScrape, currentTab]);
+    if (currentTab === 'check' && !articleData) handleScrape();
+  }, [handleScrape, currentTab, articleData]);
+
+  const loadHistoryItem = (item: HistoryItem) => {
+    setArticleData(item.article);
+    setSecondarySources(item.sources);
+    setAnalysisReport(item.report);
+    setError(null);
+    setCurrentTab('check');
+  };
 
   const handleAnalyze = async () => {
     if (!geminiKey || !tavilyKey) {
@@ -193,24 +202,29 @@ export function SidePanel() {
         </div>
       </header>
 
-      {/* Methodology Modal */}
       {showMethodology && (
-        <div className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface rounded-2xl shadow-2xl p-6 w-full max-w-sm border border-on-surface/10 animate-in fade-in zoom-in-95">
+        <div 
+          onClick={() => setShowMethodology(false)}
+          className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-surface rounded-2xl shadow-2xl p-6 w-full max-w-sm border border-on-surface/10 animate-in fade-in zoom-in-95 cursor-default"
+          >
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold uppercase tracking-wider text-primary text-sm flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4" /> Methodology
               </h3>
-              <button onClick={() => setShowMethodology(false)} className="opacity-50 hover:opacity-100">
+              <button onClick={() => setShowMethodology(false)} className="opacity-50 hover:opacity-100 hover:text-rose-500 transition-colors cursor-pointer p-1">
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div className="space-y-4 text-sm text-on-surface/80 leading-relaxed font-medium">
               <p>1. <strong>Extraction:</strong> We pull the article's core text from supported news publishers.</p>
               <p>2. <strong>Research:</strong> We query the <em>Tavily Search API</em> to find 3 distinct, alternative sources reporting on the same topic.</p>
-              <p>3. <strong>Analysis:</strong> We provide the primary text and alternative snippets to <em>Gemini 2.5 Flash</em>. Gemini compares them holistically, mapping identifying omissions and structural biases.</p>
+              <p>3. <strong>Analysis:</strong> We provide the primary text and alternative snippets to <em>Gemini 2.5 Flash</em>. Gemini compares them holistically, identifying omissions and structural biases.</p>
             </div>
-            <button onClick={() => setShowMethodology(false)} className="w-full mt-6 py-3 bg-surface-container font-bold text-xs uppercase tracking-widest rounded-lg">
+            <button onClick={() => setShowMethodology(false)} className="w-full mt-6 py-3 bg-surface-container hover:bg-surface-container/80 transition-colors font-bold text-xs uppercase tracking-widest rounded-lg cursor-pointer hover:text-primary">
               Close
             </button>
           </div>
@@ -428,9 +442,13 @@ export function SidePanel() {
                 </div>
                 <div className="space-y-3">
                   {history.slice(0, 3).map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-3 bg-white border border-on-surface/5 rounded-xl transition-all cursor-default shadow-sm">
+                    <div 
+                      key={item.id} 
+                      onClick={() => loadHistoryItem(item)}
+                      className="flex items-center justify-between p-3 bg-white border border-on-surface/5 rounded-xl transition-all cursor-pointer shadow-sm hover:border-primary/30 hover:shadow-md group"
+                    >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center text-primary/40">
+                        <div className="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center text-primary/40 group-hover:text-primary transition-colors">
                           <ShieldCheck className={`w-5 h-5 ${item.report.conflictLevel === 'High' ? 'text-rose-400' : item.report.conflictLevel === 'Medium' ? 'text-amber-400' : 'text-emerald-400'}`} />
                         </div>
                         <div>
@@ -438,6 +456,7 @@ export function SidePanel() {
                           <p className="text-[10px] uppercase font-bold text-on-surface/40 mt-0.5">{timeAgo(item.timestamp)}</p>
                         </div>
                       </div>
+                      <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-primary" />
                     </div>
                   ))}
                 </div>
@@ -447,12 +466,17 @@ export function SidePanel() {
         ) : (
           <div className="space-y-4">
             {history.length > 0 ? history.map((item) => (
-               <div key={item.id} className="p-4 bg-white border border-on-surface/5 rounded-xl shadow-sm space-y-3 animate-in fade-in slide-in-from-bottom-2">
-                 <div className="flex justify-between items-start border-b border-on-surface/5 pb-3">
+               <div 
+                 key={item.id} 
+                 onClick={() => loadHistoryItem(item)}
+                 className="p-4 bg-white border border-on-surface/5 rounded-xl shadow-sm space-y-3 animate-in fade-in slide-in-from-bottom-2 cursor-pointer hover:border-primary/30 hover:shadow-md transition-all group"
+               >
+                 <div className="flex justify-between items-start border-b border-on-surface/5 pb-3 group-hover:border-primary/10 transition-colors">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface/40 block mb-1">{timeAgo(item.timestamp)}</span>
-                      <h4 className="text-sm font-bold text-on-surface leading-tight">{item.article.title}</h4>
+                      <h4 className="text-sm font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">{item.article.title}</h4>
                     </div>
+                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-primary shrink-0 mt-2" />
                  </div>
                  <div className="flex gap-2 items-center">
                     <span className={`px-2 py-1 rounded text-[10px] uppercase font-bold ${getConflictStyle(item.report.conflictLevel)}`}>
@@ -479,10 +503,10 @@ export function SidePanel() {
       <footer className="p-4 border-t border-on-surface/5 bg-white/50 backdrop-blur-sm sticky bottom-0 z-10 shrink-0">
         <button 
           onClick={() => setShowMethodology(true)}
-          className="flex items-center justify-between w-full p-3 bg-surface-container rounded-xl hover:bg-surface-container/70 transition-colors group"
+          className="flex items-center justify-between w-full p-3 bg-surface-container border border-transparent rounded-xl hover:bg-surface-container/70 hover:border-primary/20 hover:shadow-sm cursor-pointer transition-all group"
         >
-          <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface/60">Verification Methodology</span>
-          <ArrowRight className="w-3.5 h-3.5 opacity-40 group-hover:translate-x-1 transition-all" />
+          <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface/60 group-hover:text-primary transition-colors">Verification Methodology</span>
+          <ArrowRight className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-primary transition-all" />
         </button>
       </footer>
     </div>
